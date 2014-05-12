@@ -1,8 +1,4 @@
 document.addEventListener('DOMContentLoaded', function(){
-  var mainRegion = document.getElementById("main-region");
-  var listBody = document.getElementsByTagName("tbody")[0];
-  var contactTemplate = document.getElementById("contact-list-item");
-  var textArea = document.getElementsByClassName("textarea")[0];
   var contacts = [
       { id: 1, firstName: "Alice", lastName: "Arten",
         phoneNumber: "(415) 555-0184" },
@@ -11,40 +7,68 @@ document.addEventListener('DOMContentLoaded', function(){
       { id:3, firstName: "Charlie", lastName: "Campbell",
         phoneNumber: "(415) 555-0129" }
     ];
-  var events = {
-    "click .js-delete": function deleteClicked(e){
-      var item  = findItemIndex(this, contacts);
-      contacts = contacts.slice(0, item).concat(contacts.slice(item+1));
-      listBody.innerHTML = "";
-      addContactsToDom(contacts, contactTemplate, listBody, events);
-    },
-    "click .js-import": function importClicked(e){
-      var importArray = textArea.value.split(" ");
-      for(var i=0; i<importArray.length; i+=4){
-        var item = {};
-        item.firstName = importArray[i];
-        item.lastName = importArray[i+1];
-        item.phoneNumber = importArray[i+2] + " " + importArray[i+3];
-        contacts.push(item);
+  var Contact = {
+    id: window.localStorage.getItem("Contacts:index"),
+
+    $region: document.getElementById("main-region"),
+    $list: document.getElementsByTagName("tbody")[0],
+    $form: document.getElementsByClassName("textarea")[0],
+    $contactTemplate: document.getElementById("contact-list-item"),
+    $button_import: document.getElementsByClassName("js-import"),
+    $button_discard: document.getElementsByClassName("js-discard"),
+
+    events:  {
+      "click .js-delete": function deleteClicked(e){
+        var item  = helpers.findItemIndex(this, contacts);
+        contacts = contacts.slice(0, item).concat(contacts.slice(item+1));
+        Contact.$list.innerHTML = "";
+        helpers.addContactsToDom(contacts, Contact.$contactTemplate, Contact.$list, Contact.events);
+      },
+      "click .js-import": function importClicked(e){
+        var importArray = textArea.value.split(" ");
+        for(var i=0; i<importArray.length; i+=4){
+          var item = {};
+          item.firstName = importArray[i];
+          item.lastName = importArray[i+1];
+          item.phoneNumber = importArray[i+2] + " " + importArray[i+3];
+          contacts.push(item);
+        }
+        listBody.innerHTML = "";
+        helpers.addContactsToDom(contacts, Contact.$contactTemplate, Contact.$list, Contact.events);
+      },
+      "click .js-export": function exportClicked(e){
+        var collection = this;
+        var exportString = ""
+        for(var i=0; i<collection.length; i++){
+          var item = collection[i];
+          var entry = item.firstName + " " + item.lastName + " " + item.phoneNumber + ",\n";
+          exportString += entry;
+        };
+        textArea.value = exportString;
+      },
+      "click .js-clear": function clearClicked(e){
+        textArea.textContent = "";
       }
-      listBody.innerHTML = "";
-      addContactsToDom(contacts, contactTemplate, listBody, events);
     },
-    "click .js-export": function exportClicked(e){
-      var collection = this;
-      var exportString = ""
-      for(var i=0; i<collection.length; i++){
-        var item = collection[i];
-        var entry = item.firstName + " " + item.lastName + " " + item.phoneNumber;
-        exportString += entry;
-      };
-      textArea.textContent = exportString;
+
+    init: function(){
+      if(!Contact.index){
+        window.localStorage.setItem("Contacts:index", Contact.index = 1);
+      }
+      // ititialize form buttons
+      helpers.bindListeners(this.$region, this.events, contacts, true);
+      // initialize list
+      helpers.addContactsToDom(contacts, this.$contactTemplate, this.$list, this.events);
     },
-    "click .js-clear": function clearClicked(e){
-      textArea.textContent = "";
-    }
+
+    storeAdd: function(entry){},
+    storeEdit: function(entry){},
+    storeRemove: function(entry){},
+
+    listAdd: function(entry){},
+    listEdit: function(entry){},
+    listDelete: function(entry){}
   };
 
-  bindListeners(mainRegion, events, contacts, true);
-  addContactsToDom(contacts, contactTemplate, listBody, events);
+  Contact.init();
 });

@@ -1,4 +1,5 @@
-var interpolateTemplate = function(model, template){
+var helpers = {
+  interpolateTemplate: function(model, template){
     var newNode = template.cloneNode(true);
     var content = newNode.text.trim();
     var interpolatingRegEx = /<%=([\s\S]+?)%>/g;
@@ -9,9 +10,8 @@ var interpolateTemplate = function(model, template){
       return interp;
     });
     return interpolatedString;
-  };
-
-  var findItemIndex = function(model, collection){
+  },
+  findItemIndex: function(model, collection){
     for(var i=0; i<collection.length; i++){
       var item = collection[i];
       if(item.id === model.id){
@@ -19,9 +19,8 @@ var interpolateTemplate = function(model, template){
       }
       console.log("model not found in collection");
     }
-  }
-
-  var bindListeners = function(DOMTree, events, model, singleNode){
+  },
+  bindListeners: function(DOMTree, events, model, singleNode){
     var latest_child = DOMTree.lastChild;
     //iterate thru events
     for(var key in events){
@@ -42,14 +41,14 @@ var interpolateTemplate = function(model, template){
         targetNode.addEventListener(type, callback)
       }
     }
-  };
-
-  var addContactsToDom = function(contacts, contactTemplate, region, events){
+  },
+  addContactsToDom: function(contacts, contactTemplate, region, events){
     for(var i=0; i<contacts.length; i++){
       var contact = contacts[i];
-      var interpolatedString = interpolateTemplate(contact, contactTemplate);
+      var interpolatedString = this.interpolateTemplate(contact, contactTemplate);
       region.insertAdjacentHTML("beforeend", interpolatedString);
-      bindListeners(region, events, contact);
+      this.bindListeners(region, events, contact);
     }
-  };
+  }
+};
 

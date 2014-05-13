@@ -28,16 +28,3 @@ The interface should be made up of the following:
 * The final product should be compatible with the latest versions of all major browsers (Chrome, FF, Safari, IE)
 * Bonus points are rewarded if the data in the form persists when the user navigates away from the page and comes back
 * Extra bonus points for how the persistent data is stored
-
-## EXTRAS
-**Security:**
-
-Make Address Book accessible by password.
-Encrypt contacts before storing them.
-
-**Form Validation**
-
-## TODOs:
-* [css] manage column spacing in <table>
-* [css] add row highlighting on :hover
-* [css] add x symbol to delete button

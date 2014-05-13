@@ -28,11 +28,27 @@ table > thead > tr > th {
 
 textarea {
   background-color:transparent;
-  width: 500px;
+  width: 550px;
   height: 120px;
   overflow: auto;
   padding-right: auto;
   padding-left: auto;
+}
+
+.btn {
+  padding: 5px 10px;
+  font-size: 12px;
+  line-height: 1.5;
+  border-radius: 3px;
+  color: #333;
+  background-color: #fff;
+  border-color: #ccc;
+}
+
+.btn:hover {
+  color: #333;
+  background-color: #e6e6e6;
+  border-color: #adadad
 }
 .navbar {
   position: fixed;
@@ -91,7 +107,7 @@ textarea {
 }
 
 .metrics {
-  width: 500px;
+  width: 550px;
 }
 @media (min-width: 768px){
   .navbar-header {

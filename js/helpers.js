@@ -26,7 +26,7 @@ var helpers = {
     for(var key in events){
       var typeAndSelector = key.split(" ");
       var type = typeAndSelector[0];
-      var callback = events[key].bind(model);
+      var callback = model ? events[key].bind(model) : events[key];
       var selector = typeAndSelector[1];
       var targetNodes;
       if(singleNode){
@@ -49,6 +49,7 @@ var helpers = {
       region.insertAdjacentHTML("beforeend", interpolatedString);
       this.bindListeners(region, events, contact);
     }
+    document.querySelector(".js-total").innerHTML = contacts.length;
   }
 };
 

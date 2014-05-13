@@ -4,6 +4,36 @@ body {
   padding-top: 60px;
 }
 
+table {
+ border-spacing: 0;
+ border-collapse: collapse;
+ width: 100%;
+ background-color: transparent;
+ margin-bottom: 20px;
+}
+
+td,
+th {
+  padding: 8px;
+  line-height:1.5;
+  vertical-align: top;
+  text-align: left;
+  border-top: 1px solid #ddd;
+}
+
+table > thead > tr > th {
+ vertical-align: bottom;
+ border-bottom: 2px solid #ddd;
+}
+
+textarea {
+  background-color:transparent;
+  width: 500px;
+  height: 120px;
+  overflow: auto;
+  padding-right: auto;
+  padding-left: auto;
+}
 .navbar {
   position: fixed;
   right: 0;
@@ -46,10 +76,23 @@ body {
 .container {
   padding-right: 15px;
   padding-left: 15px;
+  padding-bottom: 20px;
   margin-right: auto;
   margin-left: auto;
 }
 
+.textarea-container {
+  padding-top: 30px;
+}
+
+.th {
+  color: #151515;
+  text-decoration: none;
+}
+
+.metrics {
+  width: 500px;
+}
 @media (min-width: 768px){
   .navbar-header {
    float: left;
